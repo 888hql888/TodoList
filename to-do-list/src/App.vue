@@ -87,11 +87,12 @@ export default {
        this.updateArray();
 
     },
-    addNewList() {git
+    addNewList() {
       if (this.newlist && !this.toFinshed.includes(this.newlist)) {
         this.toFinshed.push(this.newlist);
+        this.newlist = '';
       }
-      // this.updateArray();
+       this.updateArray();
     },
   },
 };
