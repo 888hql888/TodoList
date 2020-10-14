@@ -43,10 +43,31 @@ export default {
       Finshed: ["9999", "8888"],
     };
   },
+  created(){
+    //从本地初始化数据
+    this.initData();
+  },
   methods: {
+    updateArray(){
+      let arr1 = JSON.stringify(this.toFinshed);
+      let arr2 = JSON.stringify(this.Finshed);
+      window.localStorage.setItem('toFinshed',arr1);
+      window.localStorage.setItem('Finshed',arr2);
+    },
+     //初始化数据
+    initData(){
+        if(localStorage.getItem("toFinshed")){
+          this.toFinshed=JSON.parse(localStorage.getItem("toFinshed"));
+        }
+         if(localStorage.getItem("Finshed")){
+          this.Finshed=JSON.parse(localStorage.getItem("Finshed"));
+        }
+    },
     //删除
     deleteList(index){
       this.Finshed.splice(index,1);
+      this.updateArray();
+
     },
     //已完成
     finshed(index,item){
@@ -54,6 +75,8 @@ export default {
          if (!this.Finshed.includes(item)) {
         this.Finshed.push(item);
       }
+     this.updateArray();
+
     },
     //未完成
     failFinshed(index,item){
@@ -61,11 +84,14 @@ export default {
        if (!this.toFinshed.includes(item)) {
         this.toFinshed.push(item);
       }
+       this.updateArray();
+
     },
-    addNewList() {
+    addNewList() {git
       if (this.newlist && !this.toFinshed.includes(this.newlist)) {
         this.toFinshed.push(this.newlist);
       }
+      // this.updateArray();
     },
   },
 };
