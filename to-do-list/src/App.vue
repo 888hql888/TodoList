@@ -8,133 +8,146 @@
     <div class="toFinsh">
       <h3>待完成</h3>
       <ul>
-        <li v-for="(item,index) in toFinshed" :key="index">
-          <div>{{index}}、{{item}}</div>
+        <li v-for="(item,index)in toFinshed" :key="index">
+          <div>{{ index }}、{{ item }}</div>
           <div>
-              <button class="btn1" @click="finshed(index,item)">已完成</button>
-              <button class="btn2">未完成</button>
+            <button class="btn1" @click="finshed(index, item)">已完成</button>
+            <button class="btn2">未完成</button>
           </div>
         </li>
       </ul>
     </div>
 
-
-     <div class="toFinsh">
+    <div class="toFinsh">
       <h3>已完成</h3>
       <ul>
-        <li v-for="(item,index) in Finshed" :key="index">
-          <div>{{index}}、{{item}}</div>
+        <li v-for="(item, index) in Finshed" :key="index">
+          <div>{{ index }}、{{ item }}</div>
           <div>
-              <button class="btn3" @click="deleteList(index)">删除</button>
-              <button class="btn4" @click="failFinshed(index,item)">未完成</button>
+            <button class="btn3" @click="deleteList(index)">删除</button>
+            <button class="btn4" @click="failFinshed(index, item)">
+              未完成
+            </button>
           </div>
         </li>
       </ul>
     </div>
-  
   </div>
 </template>
 <script>
-export default {
-  data() {
-    return {
-      newlist: "",
-      toFinshed: ["0000", "xxxxx", "3333"],
-      Finshed: ["9999", "8888"],
-    };
-  },
-  created(){
-    //从本地初始化数据
-    this.initData();
-  },
-  methods: {
-    updateArray(){
-      let arr1 = JSON.stringify(this.toFinshed);
-      let arr2 = JSON.stringify(this.Finshed);
-      window.localStorage.setItem('toFinshed',arr1);
-      window.localStorage.setItem('Finshed',arr2);
+  export default {
+    data() {
+      return {
+        newlist: "",
+        toFinshed: ["0000", "xxxxx", "3333"],
+        Finshed: ["9999", "8888"],
+      }
     },
-     //初始化数据
-    initData(){
-        if(localStorage.getItem("toFinshed")){
-          this.toFinshed=JSON.parse(localStorage.getItem("toFinshed"));
+    created() {
+      //从本地初始化数据
+      this.initData();
+    },
+    methods: {
+      updateArray() {
+        let arr1 = JSON.stringify(this.toFinshed);
+        let arr2 = JSON.stringify(this.Finshed);
+        window.localStorage.setItem('toFinshed', arr1);
+        window.localStorage.setItem('Finshed', arr2);
+      },
+      //初始化数据
+      initData() {
+        if (localStorage.getItem("toFinshed")) {
+          this.toFinshed = JSON.parse(localStorage.getItem("toFinshed"));
         }
-         if(localStorage.getItem("Finshed")){
-          this.Finshed=JSON.parse(localStorage.getItem("Finshed"));
+        if (localStorage.getItem("Finshed")) {
+          this.Finshed = JSON.parse(localStorage.getItem("Finshed"));
         }
-    },
-    //删除
-    deleteList(index){
-      this.Finshed.splice(index,1);
-      this.updateArray();
+      },
+      //删除
+      deleteList(index) {
+        this.Finshed.splice(index, 1);
+        this.updateArray();
 
-    },
-    //已完成
-    finshed(index,item){
-        this.toFinshed.splice(index,1)
-         if (!this.Finshed.includes(item)) {
-        this.Finshed.push(item);
-      }
-     this.updateArray();
+      },
+      //已完成
+      finshed(index, item) {
+        this.toFinshed.splice(index, 1)
+        if (!this.Finshed.includes(item)){
+            this.Finshed.push(item);
+          }
+          this.updateArray();
 
-    },
-    //未完成
-    failFinshed(index,item){
-        this.Finshed.splice(index,1)
-       if (!this.toFinshed.includes(item)) {
-        this.toFinshed.push(item);
-      }
-       this.updateArray();
+        },
+        //未完成
+        failFinshed(index, item) {
+            this.Finshed.splice(index, 1)
+            if (!this.toFinshed.includes(item)) {
+              this.toFinshed.push(item);
+            }
+            this.updateArray();
 
-    },
-    addNewList() {
-      if (this.newlist && !this.toFinshed.includes(this.newlist)) {
-        this.toFinshed.push(this.newlist);
-        this.newlist = '';
-      }
-       this.updateArray();
-    },
-  },
-};
+          },
+          addNewList() {
+            if (this.newlist && !this.toFinshed.includes(this.newlist)){
+                this.toFinshed.push(this.newlist);
+                this.newlist = '';
+              }
+              this.updateArray();
+            }
+          }
+      };
 </script>
 <style lang="less" scoped>
 * {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
-ul li{
+
+ul li {
   list-style: none;
 }
-image{
+
+image {
   display: block;
 }
+
 .todoList {
   width: 40%;
   padding: 20px;
   margin: 0 auto;
   border: 1px solid red;
-  .title{
+
+  .title {
     display: flex;
     margin-bottom: 20px;
-    input{
+
+    input {
       margin-left: 30px;
     }
   }
-  .toFinsh{
+
+  .toFinsh {
     margin-bottom: 40px;
-    ul{
+
+    ul {
       display: flex;
       flex-direction: column;
-      li{
+
+      li {
         display: flex;
         align-items: center;
         margin: 4px;
-        div:first-child{
+
+        div:first-child {
           margin-right: 20px;
         }
       }
     }
-    .btn1,.btn2,.btn3,.btn4{
+
+    .btn1,
+    .btn2,
+    .btn3,
+    .btn4 {
       width: 80px;
       height: 40px;
       line-height: 40px;
@@ -144,18 +157,21 @@ image{
       border-radius: 8px;
       color: white;
     }
-    .btn1{
+
+    .btn1 {
       background-color: green;
     }
-    .btn2{
+
+    .btn2 {
       background-color: hotpink;
     }
-    .btn3{
+
+    .btn3 {
       background: red;
     }
-    .btn4{
-      background: orange;
 
+    .btn4 {
+      background: orange;
     }
   }
 }
